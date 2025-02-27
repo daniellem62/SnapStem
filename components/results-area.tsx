@@ -1,23 +1,36 @@
-import { ImageOff } from "lucide-react"
-import styles from "./results-area.module.css"
+import { ImageOff } from "lucide-react";
+import styles from "./results-area.module.css";
+import { useEffect } from "react";
 
 interface ResultItem {
-  id: string
-  imageUrl: string
-  similarity: number
+  id: string;
+  imageUrl: string;
+  similarity: number;
   metadata?: {
-    title?: string
-    description?: string
-    [key: string]: any
-  }
+    title?: string;
+    description?: string;
+    [key: string]: any;
+  };
 }
 
 interface ResultsAreaProps {
-  results: ResultItem[]
-  isLoading: boolean
+  results: ResultItem[];
+  isLoading: boolean;
 }
 
 export default function ResultsArea({ results, isLoading }: ResultsAreaProps) {
+  useEffect(() => {
+    if (results.length > 0) {
+      console.log("First result:", {
+        id: results[0].id,
+        hasImageUrl: !!results[0].imageUrl,
+        imageUrlLength: results[0].imageUrl?.length || 0,
+        firstChars: results[0].imageUrl?.substring(0, 30) + "...",
+      });
+    }
+  }, [results]);
+
+  // Use the results directly without additional formatting
   return (
     <div className={styles.resultsContainer}>
       <h2 className={styles.resultsTitle}>Similar Images</h2>
@@ -39,13 +52,19 @@ export default function ResultsArea({ results, isLoading }: ResultsAreaProps) {
                 />
               </div>
               <div className={styles.resultInfo}>
-                <h3 className={styles.resultTitle}>{result.metadata?.title || "Untitled Image"}</h3>
+                <h3 className={styles.resultTitle}>
+                  {result.metadata?.title || "Untitled Image"}
+                </h3>
                 {result.metadata?.description && (
-                  <p className={styles.resultDescription}>{result.metadata.description}</p>
+                  <p className={styles.resultDescription}>
+                    {result.metadata.description}
+                  </p>
                 )}
                 <div className={styles.similarityScore}>
                   <span className={styles.similarityLabel}>Similarity:</span>
-                  <span className={styles.similarityValue}>{(result.similarity * 100).toFixed(1)}%</span>
+                  <span className={styles.similarityValue}>
+                    {(result.similarity * 100).toFixed(1)}%
+                  </span>
                 </div>
               </div>
             </div>
@@ -58,6 +77,5 @@ export default function ResultsArea({ results, isLoading }: ResultsAreaProps) {
         </div>
       )}
     </div>
-  )
+  );
 }
-

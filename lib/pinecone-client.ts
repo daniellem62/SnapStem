@@ -1,5 +1,6 @@
 import { createEmbedding } from "./embedding";
 import { Pinecone } from "@pinecone-database/pinecone";
+import sharp from "sharp";
 
 const pinecone = new Pinecone({
   apiKey: process.env.PINECONE_API_KEY!,
@@ -8,7 +9,10 @@ const pinecone = new Pinecone({
 const index = pinecone.index(process.env.PINECONE_INDEX_NAME || "image-search");
 
 export async function searchSimilarImages(imageBuffer: Buffer, topK = 5) {
-  console.log("searchSimilarImages function called with buffer size:", imageBuffer.length);
+  console.log(
+    "searchSimilarImages function called with buffer size:",
+    imageBuffer.length
+  );
   try {
     // Create vector embedding from the image
     const embedding = await createEmbedding(imageBuffer);
@@ -47,15 +51,38 @@ export async function addImageToIndex(
   metadata: any
 ) {
   try {
+    const compressImage = async (buffer: Buffer): Promise<string> => {
+      // With sharp:
+      const compressed = await sharp(buffer)
+        .resize(300, 300, { fit: "inside" })
+        .jpeg({ quality: 70 })
+        .toBuffer();
+      return compressed.toString("base64");
+    };
+
+    // Correct way - await the async function
+    const imageBase64 = await compressImage(imageBuffer);
+    const enhancedMetadata = {
+      ...metadata,
+      imageBase64: imageBase64,
+    };
+
     const embedding = await createEmbedding(imageBuffer);
+
+    // Log for debugging
+    console.log(
+      "Storing image in Pinecone with base64 length:",
+      imageBase64.length
+    );
 
     await index.upsert([
       {
         id,
         values: embedding,
-        metadata,
+        metadata: enhancedMetadata,
       },
     ]);
+
     console.log("Image added to index:", id);
     return { success: true };
   } catch (error) {
