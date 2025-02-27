@@ -8,20 +8,28 @@ const pinecone = new Pinecone({
 
 const index = pinecone.index(process.env.PINECONE_INDEX_NAME || "image-search");
 
-export async function searchSimilarImages(imageBuffer: Buffer, topK = 5) {
+export async function searchSimilarImages(
+  imageBuffer: Buffer,
+  topK = 10, // Request more results initially
+  minSimilarity = 0.9 // Only return matches with 90% or higher similarity
+) {
   console.log(
     "searchSimilarImages function called with buffer size:",
     imageBuffer.length
   );
   try {
     // Create vector embedding from the image
-    const embedding = await createEmbedding(imageBuffer);
+    const result = await createEmbedding(imageBuffer);
+    const embedding = result.embedding;
+    const plantName = result.plantName;
+
     console.log(
       "Embedding generated:",
       embedding.length,
       "dimensions, sample:",
       embedding.slice(0, 5)
     );
+    console.log("Plant identified as:", plantName);
 
     // Query Pinecone index with the embedding
     console.log("Querying Pinecone...");
@@ -32,12 +40,16 @@ export async function searchSimilarImages(imageBuffer: Buffer, topK = 5) {
     });
     console.log("Pinecone query result:", queryResult);
 
-    // Return matched items with their metadata and scores
-    return queryResult.matches.map((match) => ({
-      id: match.id,
-      score: match.score,
-      metadata: match.metadata,
-    }));
+    // Filter results by similarity threshold
+    const filteredResults = queryResult.matches.filter(
+      (match) => match.score >= minSimilarity
+    );
+
+    console.log(
+      `Filtered from ${queryResult.matches.length} to ${filteredResults.length} results with threshold ${minSimilarity}`
+    );
+
+    return filteredResults;
   } catch (error) {
     console.error("Error searching similar images:", error);
     throw new Error("Failed to search for similar images");
@@ -51,8 +63,13 @@ export async function addImageToIndex(
   metadata: any
 ) {
   try {
+    // Get embedding and plant name
+    const result = await createEmbedding(imageBuffer);
+    const embedding = result.embedding;
+    const plantName = result.plantName;
+
+    // Compress the image
     const compressImage = async (buffer: Buffer): Promise<string> => {
-      // With sharp:
       const compressed = await sharp(buffer)
         .resize(300, 300, { fit: "inside" })
         .jpeg({ quality: 70 })
@@ -60,21 +77,17 @@ export async function addImageToIndex(
       return compressed.toString("base64");
     };
 
-    // Correct way - await the async function
     const imageBase64 = await compressImage(imageBuffer);
+
+    // Add plant name to metadata
     const enhancedMetadata = {
       ...metadata,
+      title: plantName, // Use plant name as title instead of file name
+      originalName: metadata.name, // Keep original filename
       imageBase64: imageBase64,
     };
 
-    const embedding = await createEmbedding(imageBuffer);
-
-    // Log for debugging
-    console.log(
-      "Storing image in Pinecone with base64 length:",
-      imageBase64.length
-    );
-
+    // Upsert to Pinecone
     await index.upsert([
       {
         id,
@@ -83,7 +96,7 @@ export async function addImageToIndex(
       },
     ]);
 
-    console.log("Image added to index:", id);
+    console.log("Image added to index:", id, "as", plantName);
     return { success: true };
   } catch (error) {
     console.error("Error adding image to index:", error);
