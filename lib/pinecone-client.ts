@@ -1,63 +1,65 @@
-import { Pinecone } from "@pinecone-database/pinecone"
-import { createImageEmbedding } from "./embedding"
+import { createEmbedding } from "./embedding";
+import { Pinecone } from "@pinecone-database/pinecone";
 
-// Initialize Pinecone client
 const pinecone = new Pinecone({
-  apiKey: process.env.PINECONE_API_KEY || "",
-})
+  apiKey: process.env.PINECONE_API_KEY!,
+});
 
-// Get the index
-const index = pinecone.index(process.env.PINECONE_INDEX_NAME || "")
+const index = pinecone.index(process.env.PINECONE_INDEX_NAME || "image-search");
 
-export async function searchSimilarImages(imageBuffer: Buffer) {
+export async function searchSimilarImages(imageBuffer: Buffer, topK = 5) {
+  console.log("searchSimilarImages function called with buffer size:", imageBuffer.length);
   try {
-    // Generate embedding for the uploaded image
-    const embedding = await createImageEmbedding(imageBuffer)
+    // Create vector embedding from the image
+    const embedding = await createEmbedding(imageBuffer);
+    console.log(
+      "Embedding generated:",
+      embedding.length,
+      "dimensions, sample:",
+      embedding.slice(0, 5)
+    );
 
-    // Query Pinecone for similar vectors
-    const queryResponse = await index.query({
+    // Query Pinecone index with the embedding
+    console.log("Querying Pinecone...");
+    const queryResult = await index.query({
       vector: embedding,
-      topK: 9,
+      topK,
       includeMetadata: true,
-      includeValues: false,
-    })
+    });
+    console.log("Pinecone query result:", queryResult);
 
-    // Format the results
-    const results = queryResponse.matches.map((match) => ({
+    // Return matched items with their metadata and scores
+    return queryResult.matches.map((match) => ({
       id: match.id,
-      similarity: match.score,
-      imageUrl: match.metadata?.imageUrl || "/placeholder.svg?height=300&width=300",
-      metadata: match.metadata || {},
-    }))
-
-    return results
+      score: match.score,
+      metadata: match.metadata,
+    }));
   } catch (error) {
-    console.error("Error searching similar images:", error)
-    throw new Error("Failed to search for similar images")
+    console.error("Error searching similar images:", error);
+    throw new Error("Failed to search for similar images");
   }
 }
 
-export async function indexImage(imageBuffer: Buffer, metadata: any) {
+// Function to add images to the index (for reference)
+export async function addImageToIndex(
+  imageBuffer: Buffer,
+  id: string,
+  metadata: any
+) {
   try {
-    // Generate embedding for the image
-    const embedding = await createImageEmbedding(imageBuffer)
+    const embedding = await createEmbedding(imageBuffer);
 
-    // Create a unique ID for the vector
-    const id = `img_${Date.now()}_${Math.floor(Math.random() * 1000)}`
-
-    // Upsert the vector into Pinecone
     await index.upsert([
       {
         id,
         values: embedding,
         metadata,
       },
-    ])
+    ]);
 
-    return id
+    return { success: true };
   } catch (error) {
-    console.error("Error indexing image:", error)
-    throw new Error("Failed to index image")
+    console.error("Error adding image to index:", error);
+    throw new Error("Failed to add image to index");
   }
 }
-
