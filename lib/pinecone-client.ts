@@ -1,5 +1,5 @@
 import { Pinecone } from "@pinecone-database/pinecone"
-import { createEmbedding } from "./embedding"
+import { createImageEmbedding } from "./embedding"
 
 // Initialize Pinecone client
 const pinecone = new Pinecone({
@@ -12,7 +12,7 @@ const index = pinecone.index(process.env.PINECONE_INDEX_NAME || "")
 export async function searchSimilarImages(imageBuffer: Buffer) {
   try {
     // Generate embedding for the uploaded image
-    const embedding = await createEmbedding(imageBuffer)
+    const embedding = await createImageEmbedding(imageBuffer)
 
     // Query Pinecone for similar vectors
     const queryResponse = await index.query({
@@ -40,7 +40,7 @@ export async function searchSimilarImages(imageBuffer: Buffer) {
 export async function indexImage(imageBuffer: Buffer, metadata: any) {
   try {
     // Generate embedding for the image
-    const embedding = await createEmbedding(imageBuffer)
+    const embedding = await createImageEmbedding(imageBuffer)
 
     // Create a unique ID for the vector
     const id = `img_${Date.now()}_${Math.floor(Math.random() * 1000)}`

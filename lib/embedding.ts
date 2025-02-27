@@ -1,26 +1,26 @@
-// This is a placeholder for the actual embedding generation
-// In a real application, you would use a model like CLIP, ResNet, or a cloud service
+import { OpenAIApi, Configuration } from "openai-edge";
 
-export async function createEmbedding(imageBuffer: Buffer): Promise<number[]> {
+// Initialize OpenAI configuration
+const config = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(config);
+
+// Placeholder function to create image embeddings using CLIP (or any other model)
+export async function createImageEmbedding(imageBuffer: Buffer): Promise<number[]> {
   try {
-    // In a real implementation, you would:
-    // 1. Use a pre-trained model to generate embeddings
-    // 2. Or call an API service that provides embedding generation
+    // You can use OpenAI's CLIP model or any other model here
+    const response = await openai.createEmbedding({
+      model: "openai/clip-vit-base-patch32", // Use CLIP for images
+      input: imageBuffer.toString('base64'),  // Convert image buffer to base64 string
+    });
 
-    // For demonstration purposes, we'll create a mock embedding
-    // In production, replace this with actual embedding generation code
-
-    // This is just a placeholder - don't use this in production!
-    const mockEmbedding = Array.from({ length: 512 }, () => Math.random() * 2 - 1)
-
-    // Normalize the embedding (important for cosine similarity)
-    const magnitude = Math.sqrt(mockEmbedding.reduce((sum, val) => sum + val * val, 0))
-    const normalizedEmbedding = mockEmbedding.map((val) => val / magnitude)
-
-    return normalizedEmbedding
+    // Assuming response.data contains the embedding
+    const result = await response.json();
+    return result.data[0].embedding as number[];
   } catch (error) {
-    console.error("Error creating embedding:", error)
-    throw new Error("Failed to create embedding for image")
+    console.error("Error creating image embedding:", error);
+    throw new Error("Failed to create embedding for image");
   }
 }
 

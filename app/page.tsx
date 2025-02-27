@@ -17,9 +17,11 @@ export default function Home() {
     setUploadedImage(imageUrl)
     setIsSearching(true)
 
+
     // Create a FormData object to send the file to the server
     const formData = new FormData()
     formData.append("image", file)
+
 
     try {
       // Send the image to the server for processing and Pinecone search
