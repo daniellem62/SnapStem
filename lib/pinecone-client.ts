@@ -56,7 +56,7 @@ export async function addImageToIndex(
         metadata,
       },
     ]);
-
+    console.log("Image added to index:", id);
     return { success: true };
   } catch (error) {
     console.error("Error adding image to index:", error);
