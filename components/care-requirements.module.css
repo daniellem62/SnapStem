@@ -3,11 +3,12 @@
   border-radius: 8px;
   padding: 1.5rem;
   margin-top: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px #11111180;
+  margin-top: auto;
 }
 
 .careTitle {
-  color: #2c6e49;
+  color: #11111180;
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.5rem;
@@ -26,7 +27,7 @@
 }
 
 .careIcon {
-  color: #2c6e49;
+  color: #11111180;
   width: 24px;
   height: 24px;
 }

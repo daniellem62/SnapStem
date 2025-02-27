@@ -4,9 +4,9 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  height: 400px;
-  margin-top: 2rem;
+  height: 600px;
   overflow: hidden;
+  box-shadow: 0 2px 8px #11111180;
 }
 
 .chatHeader {
@@ -16,6 +16,7 @@
   display: flex;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
+  box-shadow: 0 1px 5px #11111180;
 }
 
 .chatHeader h2 {
@@ -43,12 +44,14 @@
   padding: 0.75rem 1rem;
   white-space: pre-wrap;
   word-break: break-word;
+  box-shadow: 0 1px 3px #11111180;
 }
 
 .userMessage {
   align-self: flex-end;
   background-color: #4d8d6c;
   color: white;
+  box-shadow: 0 2px 3px #11111180;
 }
 
 .botMessage {
@@ -96,6 +99,7 @@
   border-top: 1px solid #e0e0e0;
   display: flex;
   padding: 0.75rem;
+  box-shadow: 0 2px 5px #11111180;
 }
 
 .chatInput {
@@ -105,6 +109,7 @@
   flex-grow: 1;
   font-size: 1rem;
   padding: 0.5rem 1rem;
+  box-shadow: inset 0px 0.5px 3px#11111180;
 }
 
 .chatInput:focus {
@@ -124,6 +129,16 @@
   justify-content: center;
   margin-left: 0.5rem;
   width: 36px;
+  box-shadow: 0 3px 3px #11111180;
+}
+
+.sendButton:hover {
+  filter: brightness(110%);
+}
+
+.sendButton:active {
+  box-shadow: 0px 2px 3px #11111180;
+  transform: translateY(1px);
 }
 
 .sendButton:disabled {

@@ -2,7 +2,7 @@
   background-color: white;
   border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px #11111180;
 }
 
 .previewTitle {
@@ -22,7 +22,8 @@
   background-color: #f9f9f9;
   border-radius: 4px;
   overflow: hidden;
-}
+  
+  }
 
 .previewImage {
   max-width: 100%;

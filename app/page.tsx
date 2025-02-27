@@ -60,19 +60,27 @@ export default function Home() {
       </p>
 
       <div className={styles.container}>
-        <div className={styles.uploadSection}>
-          <UploadArea onImageUpload={handleImageUpload} />
+        <div className={styles.pageLeft}>
+          <div className={styles.uploadSection}>
+            <UploadArea onImageUpload={handleImageUpload} />
 
-          {uploadedImage && <ImagePreview imageUrl={uploadedImage} />}
+            {uploadedImage && (
+              <ImagePreview imageUrl={uploadedImage} />
+            )}
+          </div>
+          <div className={styles.resultsSection}>
+            <ResultsArea
+              results={searchResults}
+              isLoading={isSearching}
+            />
+          </div>
         </div>
-
-        <div className={styles.resultsSection}>
-          <ResultsArea results={searchResults} isLoading={isSearching} />
+        <div className={styles.sidebar}>
+          <PlantChatbot plantContext={identifiedPlant} />
           <CareRequirements
             careText={careRequirements}
             isLoading={isSearching}
           />
-          <PlantChatbot plantContext={identifiedPlant} />
         </div>
       </div>
     </main>
