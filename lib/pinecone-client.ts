@@ -42,7 +42,7 @@ export async function searchSimilarImages(
 
     // Filter results by similarity threshold
     const filteredResults = queryResult.matches.filter(
-      (match) => match.score >= minSimilarity
+      (match) => (match.score ?? 0) >= minSimilarity
     );
 
     console.log(
