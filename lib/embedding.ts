@@ -7,7 +7,12 @@ const openai = new OpenAIApi(config);
 
 export async function createEmbedding(
   imageBuffer: Buffer
-): Promise<{ embedding: number[]; plantName: string }> {
+): Promise<{
+  embedding: number[];
+  plantName: string;
+  plantDescription: string;
+  careRequirements: string;
+}> {
   try {
     console.log(
       "Starting embedding creation with buffer size:",
@@ -41,7 +46,10 @@ export async function createEmbedding(
             {
               role: "system",
               content:
-                "Analyze this plant image. First, identify the common plant name in the format Plant Name: . Then create a detailed description focusing on visual elements.",
+                "Analyze this plant image. Format your response in 3 sections:\n" +
+                "1. Plant Name: [common plant name]\n" +
+                "2. Description: [detailed visual description]\n" +
+                "3. Care Requirements: [light, water, soil, temperature, humidity needs]",
             },
             {
               role: "user",
@@ -53,7 +61,7 @@ export async function createEmbedding(
               ],
             },
           ],
-          max_tokens: 300,
+          max_tokens: 500, // Increased token count for more detailed response
         }),
       }
     );
@@ -79,33 +87,53 @@ export async function createEmbedding(
 
     const imageDescription = visionResult.choices[0].message.content;
     console.log(
-      "Image described as:",
+      "AI response received:",
       imageDescription.substring(0, 100) + "..."
     );
 
-    // Extract plant name - typically the first line or sentence
+    // Extract plant name and care requirements
     let plantName = "Unknown Plant";
-    if (imageDescription.includes("\n")) {
-      // If description has multiple lines, first line is often the name
-      plantName = imageDescription.split("\n")[0];
+    let plantDescription = "";
+    let careRequirements = "";
+
+    // Parse the response into sections
+    const sections = imageDescription.split(/\d+\.\s+/); // Split by numbered sections
+
+    if (sections.length >= 4) {
+      // [empty first element], Plant Name, Description, Care Requirements
+      // Extract plant name from the first section
+      const namePart = sections[1];
+      if (namePart.toLowerCase().includes("plant name:")) {
+        plantName = namePart.replace(/plant name:/i, "").trim();
+      } else {
+        plantName = namePart.trim();
+      }
+
+      // Extract description from the second section
+      plantDescription = sections[2].replace(/description:/i, "").trim();
+
+      // Extract care requirements from the third section
+      careRequirements = sections[3].replace(/care requirements:/i, "").trim();
     } else {
-      // Otherwise, take the first sentence
-      const firstSentence = imageDescription.split(".")[0];
-      if (firstSentence.length < 50) {
-        // Reasonably short sentence likely to be just the name
-        plantName = firstSentence;
+      // Fallback if sections aren't clearly defined
+      if (imageDescription.toLowerCase().includes("plant name:")) {
+        const nameMatch = imageDescription.match(/plant name:\s*([^\n]+)/i);
+        if (nameMatch) plantName = nameMatch[1].trim();
+      }
+
+      if (imageDescription.toLowerCase().includes("care requirements:")) {
+        const careMatch = imageDescription.match(
+          /care requirements:([\s\S]+?)(?:\n\d+\.|\Z)/i
+        );
+        if (careMatch) careRequirements = careMatch[1].trim();
       }
     }
 
-    // Clean up the plant name (remove "Plant Name:", "This is a", etc.)
-    plantName = plantName
-      .replace(
-        /^(plant name:|this is a|this image shows a|the plant is a)/i,
-        ""
-      )
-      .trim();
-
     console.log("Extracted plant name:", plantName);
+    console.log(
+      "Extracted care requirements:",
+      careRequirements.substring(0, 50) + "..."
+    );
 
     // Step 2: Get text embeddings for the description
     console.log("Requesting text embedding...");
@@ -142,6 +170,8 @@ export async function createEmbedding(
       return {
         embedding: embedding,
         plantName: plantName,
+        plantDescription: plantDescription,
+        careRequirements: careRequirements,
       };
     } catch (embeddingError) {
       console.error("Error in text embedding step:", embeddingError);
