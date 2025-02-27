@@ -42,7 +42,7 @@ export async function searchSimilarImages(
 
     // Filter results by similarity threshold
     const filteredResults = queryResult.matches.filter(
-      (match) => (match.score ?? 0) >= minSimilarity
+      (match) => match.score >= minSimilarity
     );
 
     console.log(
@@ -85,6 +85,8 @@ export async function addImageToIndex(
       title: plantName, // Use plant name as title instead of file name
       originalName: metadata.name, // Keep original filename
       imageBase64: imageBase64,
+      description: result.plantDescription,
+      careRequirements: result.careRequirements,
     };
 
     // Upsert to Pinecone
