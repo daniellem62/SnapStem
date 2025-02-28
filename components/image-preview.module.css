@@ -1,8 +1,18 @@
-.previewContainer {
+/* .previewContainer {
   background-color: white;
   border-radius: 8px;
   padding: 1.5rem;
+  box-shadow: 0 2px 8px #11111180; 
+  
+} */
+
+.previewContainer {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem; /* Match the upload area padding */
   box-shadow: 0 2px 8px #11111180;
+  width: 100%;
+  height: 100%;
 }
 
 .previewTitle {
@@ -22,8 +32,7 @@
   background-color: #f9f9f9;
   border-radius: 4px;
   overflow: hidden;
-  
-  }
+}
 
 .previewImage {
   max-width: 100%;
@@ -49,4 +58,3 @@
     transform: rotate(360deg);
   }
 }
-

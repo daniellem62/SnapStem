@@ -1,4 +1,4 @@
-.uploadArea {
+/* .uploadArea {
   justify-self: stretch;
   border: 3px dashed var(--border-color);
   border-radius: 8px;
@@ -7,7 +7,20 @@
   background-color: white;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px#11111180;
- }
+ } */
+
+ .uploadArea {
+  border: 3px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  background-color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px #11111180;
+  width: 100%; /* Ensures consistent width */
+  height: 100%; /* Matches the preview container */
+}
+
 
 .dragging {
   border-color: var(--primary-color);
