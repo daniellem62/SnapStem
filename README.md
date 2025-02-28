@@ -44,11 +44,11 @@ Some stretch goals for the project are to:
 
 ## 📧 Contact
 
-[Dani](https://github.com/daniellem62)
-[Holly](https://github.com/Holl4444)
-[Nasrin](https://github.com/Nas1010)
-[Louis](https://github.com/L-Brookling)
-[Sam](https://github.com/samannetts8)
-[Owen](https://github.com/Oweshbin)
+- [Dani](https://github.com/daniellem62)
+- [Holly](https://github.com/Holl4444)
+- [Nasrin](https://github.com/Nas1010)
+- [Louis](https://github.com/L-Brookling)
+- [Sam](https://github.com/samannetts8)
+- [Owen](https://github.com/Oweshbin)
 
 Project Link: [Click here!](https://github.com/SchoolOfCode/week-12-hackathon-end-of-our-tether.git)
