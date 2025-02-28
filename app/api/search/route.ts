@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
 
     // Search for similar images using Pinecone
     const rawResults = await searchSimilarImages(buffer);
-    addImageToIndex(buffer, image.name, { name: image.name });
+    //addImageToIndex(buffer, image.name, { name: image.name });
 
     // Transform results to match your frontend component's expected format
     const formattedResults = rawResults.map((item) => ({
