@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useRef, type DragEvent, type ChangeEvent } from "react"
-import { Upload } from "lucide-react"
+import { Upload } from "lucide-react";
+import WebcamCapture from './webcam-capture';
 import styles from "./upload-area.module.css"
 
 interface UploadAreaProps {
@@ -57,6 +58,7 @@ export default function UploadArea({ onImageUpload }: UploadAreaProps) {
   }
 
   return (
+    <div>
     <div
       className={`${styles.uploadArea} ${isDragging ? styles.dragging : ""}`}
       onDragOver={handleDragOver}
@@ -79,6 +81,10 @@ export default function UploadArea({ onImageUpload }: UploadAreaProps) {
           Select Image
         </button>
         <p className={styles.uploadHint}>Supported formats: JPEG, PNG, WebP, GIF</p>
+      </div>
+    </div>
+          <div className={styles.webcamSection}>
+        <WebcamCapture onImageCapture={onImageUpload} />
       </div>
     </div>
   )
