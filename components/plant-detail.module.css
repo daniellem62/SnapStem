@@ -31,7 +31,7 @@
 }
 
 .titleContainer {
-  align-items: flex-start;
+  align-items: center;
   background: linear-gradient(135deg, #4d8d6c, #2c6e49);
   color: white;
   display: flex;
@@ -155,8 +155,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .emptyState {
