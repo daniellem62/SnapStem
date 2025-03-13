@@ -37,10 +37,13 @@ Contributions, issues, and feature requests are welcome!
 Some stretch goals for the project are to:
 
 - Add plants to an inventory/wishlist.
-- Set reminders for watering.
+- Allow users to track their plant care schedule, including reminders for watering, fertilizing, and pruning.
+- Improve plant identification accuracy and expand care information with a web crawler or API database.
 - Ask questions about plant health - why is my plant doing this eg curling leaves/browning leaves? What’s wrong with my plant? etc.
 - Identify diseases by image
-- Login page with authorisation
+- Login page with authorisation.
+
+
 
 ## 📧 Contact
 
