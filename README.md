@@ -44,7 +44,7 @@ Your app will be available at http://localhost:3000.
 ## 📈 Stretch Goals
 Some stretch goals for the project are to:
 
-- Add more plants to the database. Currectly, there a limited of number of plants in the database so if a user tries to identify a plant that is not in the database it will not give an accurate result.
+- Add more plants to the database. Currently, there are a limited of number of plants in the database. Therefore, if a user tries to identify a plant that is not in the database it will not give an accurate result.
 - Add a plant inventory/wishlist feature for users to track their plants.
 - Implement plant care schedule tracking, with reminders for watering, fertilizing, and pruning.
 - Improve plant identification accuracy by integrating a web crawler or API database for expanded care information.
