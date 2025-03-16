@@ -1,57 +1,73 @@
-# SnapStem
+# SnapStem 🌱
+
+SnapStem is a plant identification and care information app that leverages Pinecone DB for efficient vector storage and search, alongside OpenAI for identifying plants from user-uploaded photos. With the added PlantPal chatbot feature, users can get detailed care information and engage in personalized conversations about their plants.
 
 ## 🚀 About The Project
 
-This project was to be a plant image identifier.
-
-We wanted to make an app that could take and identify photos of your plant to provide care requirements for the (hopefully correctly) identified plant.
-
-We also implemented a chat bot functionality so that you could ask specific questions regarding your plant.
+SnapStem is designed to help plant owners identify and care for their plants by using AI. Users can upload photos of their plants, and the app will use OpenAI to identify the plant and provide care requirements. Additionally, the app includes a chatbot functionality, allowing users to ask specific questions about their plants and receive guidance.
 
 ## 🌟 Features
 
-- Camera functionality
-- Chat bot
-- Image similarity rating
-
+- **Camera Functionality**: Upload images of plants for identification.
+- **Chatbot**: Ask questions about plant care and health.
+- **Image Similarity Rating**: Get a similarity score to the identified plant.
+  
 ## 🛠️ Installation
 
+To get started with SnapStem, follow these steps:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/SchoolOfCode/week-12-hackathon-end-of-our-tether.git
+   ```
+   
+2. **Navigate into the project directory**:
 ```bash
-git clone https://github.com/SchoolOfCode/week-12-hackathon-end-of-our-tether.git
 cd week-12-hackathon-end-of-our-tether
+```
+3. Install dependencies:
+```bash
 npm install
 ```
-
 ## 📌 Usage
+4. **After installation, start the development server with**:
 
 ```bash
 npm run dev
 ```
+Your app will be available at http://localhost:3000.
 
 ## 🤝 Contributing
+We welcome contributions to SnapStem! Whether it's fixing bugs, adding new features, or improving documentation, feel free to contribute.
 
-Contributions, issues, and feature requests are welcome!
+To contribute:
 
-## Stretch goals
+- Fork the repository.
+- Create a new branch (git checkout -b feature-name).
+- Make your changes and commit them (git commit -m 'Add new feature').
+- Push to your branch (git push origin feature-name).
+- Open a pull request.
+- Issues and feature requests are also welcome.
 
+## 📈 Stretch Goals
 Some stretch goals for the project are to:
 
-- Add plants to an inventory/wishlist.
-- Allow users to track their plant care schedule, including reminders for watering, fertilizing, and pruning.
-- Improve plant identification accuracy and expand care information with a web crawler or API database.
-- Ask questions about plant health - why is my plant doing this eg curling leaves/browning leaves? What’s wrong with my plant? etc.
-- Identify diseases by image
-- Login page with authorisation.
-
-
+- Add a plant inventory/wishlist feature for users to track their plants.
+- Implement plant care schedule tracking, with reminders for watering, fertilizing, and pruning.
+- Improve plant identification accuracy by integrating a web crawler or API database for expanded care information.
+- Add functionality for plant health queries (e.g., “Why is my plant's leaves curling?”).
+- Implement plant disease identification via image uploads.
+Add a login page with user authentication.
 
 ## 📧 Contact
+Feel free to reach out to us with any questions, suggestions, or feedback.
 
-- [Dani](https://github.com/daniellem62)
-- [Holly](https://github.com/Holl4444)
-- [Nasrin](https://github.com/Nas1010)
-- [Louis](https://github.com/L-Brookling)
-- [Sam](https://github.com/samannetts8)
-- [Owen](https://github.com/Oweshbin)
+Dani
+Holly
+Nasrin
+Louis
+Sam
+Owen
 
-Project Link: [Click here!](https://github.com/SchoolOfCode/week-12-hackathon-end-of-our-tether.git)
+Project Link:
+Click here to view the project
