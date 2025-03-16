@@ -37,21 +37,11 @@ npm run dev
 ```
 Your app will be available at http://localhost:3000.
 
-## 🤝 Contributing
-We welcome contributions to SnapStem! Whether it's fixing bugs, adding new features, or improving documentation, feel free to contribute.
-
-To contribute:
-
-- Fork the repository.
-- Create a new branch (git checkout -b feature-name).
-- Make your changes and commit them (git commit -m 'Add new feature').
-- Push to your branch (git push origin feature-name).
-- Open a pull request.
-- Issues and feature requests are also welcome.
 
 ## 📈 Stretch Goals
 Some stretch goals for the project are to:
 
+- Add more plants to the database. Currectly, there a limited of number of plants in the database so if a user tries to identify a plant that is not in the database it will not give an accurate result.
 - Add a plant inventory/wishlist feature for users to track their plants.
 - Implement plant care schedule tracking, with reminders for watering, fertilizing, and pruning.
 - Improve plant identification accuracy by integrating a web crawler or API database for expanded care information.
@@ -71,3 +61,5 @@ Owen
 
 Project Link:
 [Click here to view the project](https://prismatic-unicorn-86da9c.netlify.app/)
+
+
