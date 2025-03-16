@@ -18,23 +18,26 @@ To get started with SnapStem, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/SchoolOfCode/week-12-hackathon-end-of-our-tether.git
+   git clone https://github.com/daniellem62/SnapStem
    ```
    
 2. **Navigate into the project directory**:
 ```bash
-cd week-12-hackathon-end-of-our-tether
+cd SnapStem
 ```
+
 3. Install dependencies:
 ```bash
 npm install
 ```
+
 ## 📌 Usage
 4. **After installation, start the development server with**:
 
 ```bash
 npm run dev
 ```
+
 Your app will be available at http://localhost:3000.
 
 
