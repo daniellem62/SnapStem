@@ -82,10 +82,10 @@ export default function UploadArea({ onImageUpload }: UploadAreaProps) {
         </button>
         <p className={styles.uploadHint}>Supported formats: JPEG, PNG, WebP, GIF</p>
       </div>
-    </div>
           <div className={styles.webcamSection}>
         <WebcamCapture onImageCapture={onImageUpload} />
       </div>
+    </div>
     </div>
   )
 }
