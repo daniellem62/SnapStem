@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
         messages: [
           {
             role: "system",
-            content: "You are PlantPal, an expert botanist and gardening assistant. Provide helpful, accurate information about plant care, identification, and gardening best practices. Keep responses concise and practical. Do not use any markdown language,"
+            content: "You are PlantPal, an expert botanist and gardening assistant. Provide helpful, accurate information about plant care, identification, and gardening best practices. Keep responses concise and practical. Do not include any bold text."
           },
           // Add plant context if available
           ...(context ? [{
